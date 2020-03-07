@@ -22,8 +22,82 @@ using namespace std;
 template <int Wymiar>
 class Wektor {
   double Wspolrzedne[Wymiar];
+  /*!
+   *\brief Pole przechowuje ilosc uzywanych obiektow klasy Wektor3D
+   *
+   * Pole przechowuje ilosc uzywanych obiektow klasy Wektor3D
+   */
+  static int IloscWektorow;
+  /*!
+   *\brief Pole przechowuje ilosc stworzonych obiektow klasy Wektor3D
+   *
+   * Pole przechowuje ilosc stworzonych obiektow klasy Wektor3D
+   */
+  static int LacznaIlosc;
   
  public:
+   /*!
+   *\brief Konstruktor domyslny
+   *
+   * Konstruktor domyslny, ustawia wartosci wszystkich skladowych na 0.
+   */
+  Wektor() 
+  {
+    for (int i = 0; i < Wymiar; i++) 
+    {
+      Wspolrzedne[i] = 0;
+    }
+    ++IloscWektorow;
+    ++LacznaIlosc;
+  }
+  /*!
+   *\brief Konstruktor kopiujacy
+   *
+   * Konstruktor kopiujacy dla klasy Wektor3D
+   */
+  Wektor(const  Wektor &Wek) 
+  {
+    ++IloscWektorow;
+    ++LacznaIlosc;
+    for (int i = 0; i < Wymiar; ++i) 
+    {
+      Wspolrzedne[i] = Wek[i];
+    }
+  }
+  /*!
+   *\brief Konstruktor parametryczny dla obiektu Wektor3D
+   *
+   *Konstruktor parametryczny dla obiektu Wektor3D
+   */
+  Wektor(int x, int y, int z) 
+  {
+    Wspolrzedne[0] = x;
+    Wspolrzedne[1] = y;
+    Wspolrzedne[2] = z;
+    ++IloscWektorow;
+    ++LacznaIlosc;
+  }
+  /*!
+   *\brief Destruktor obiektu Wektor
+   *
+   * Destruktor obiektu Wektor
+   */
+  ~Wektor() { --IloscWektorow; }
+  /*!
+   *\brief Metoda zwraca ilosc aktualnie uzywanych obiektow klasy Wektor
+   *
+   * Metoda zwraca ilosc aktualnie uzywanych obiektow klasy Wektor
+   * \return Zwraca wartosc pola IloscWektorow
+   */
+  static int ZwrocIloscWektorow() { return IloscWektorow; }
+  /*!
+   *\brief Metoda zwraca ilosc stworzonych obiektow klasy Wektor
+   *
+   * Metoda zwraca ilosc stworzonych obiektow klasy Wektor
+   * \return Zwraca wartosc pola LacznaIlosc
+   */
+  static int ZwrocLacznaIloscWektorow() { return LacznaIlosc; }
+  
    /*!
     * \brief Przeciazenie operatora [](modyfikacja wartosci)
     *
@@ -56,6 +130,15 @@ class Wektor {
     */
     Wektor<Wymiar> operator + (const Wektor<Wymiar> &Wek);
 
+  /*!
+    * \brief Przeciazenie operatora * dla Wektor<Wymiar> i liczby typu double
+    *
+    * Funkcja przeciążająca operator mnożenia, odpowiada za mnozenie przez siebie obiektu
+    * klasy Wektor<Wymiar> i liczby typu double
+    * Wywoływana z jednym argumentem double , zwraca także wartość wektora,będącego
+    *  wynikiem mnozenia
+    */
+    Wektor<Wymiar> operator * (double liczba);
     /*!
      * \brief Funkcja obliczajaca dlugosc wektora
      *
@@ -63,9 +146,14 @@ class Wektor {
      * zadnego argumentu, zwraca odległość będącą zmeinna typu double 
      */
     double DlugoscWektora();
+
 };
+//To musi sie zawsze pojawic gdy tworzymy zmienne statyczne
+template <int Wymiar>
+int Wektor<Wymiar>::IloscWektorow = 0;
 
-
+template <int Wymiar>
+int Wektor<Wymiar>::LacznaIlosc = 0;
 
 /*!
  * \brief Przeciazenie operatora >> umozliwiajaca pobranie wspolrzednych wektora z strumienia wej
@@ -152,6 +240,18 @@ Wektor<Wymiar> Wektor<Wymiar>::operator + (const Wektor<Wymiar> &Wek)
 }
 
 
+template<int Wymiar>
+inline
+Wektor<Wymiar> Wektor<Wymiar>::operator * (double liczba)
+{
+  int i;
+  Wektor<Wymiar> Wynik;
+  for(i=0;i<Wymiar;i++)
+  {
+    Wynik[i]=Wspolrzedne[i]*liczba;
+  }
+  return Wynik;
+}
 
 template<int Wymiar>
 inline 

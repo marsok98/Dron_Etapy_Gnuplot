@@ -1,6 +1,7 @@
 
-prj/wirnik*
-prj/korpus*
-prj/Przeszkoda*
+wirnik*
+korpus*
+Przeszkoda*
+*.dat
 #ignore objects
 obj/

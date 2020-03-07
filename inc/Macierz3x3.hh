@@ -42,32 +42,21 @@ typedef Macierz<3>  Macierz3x3;
 Macierz3x3 operator * (const Macierz3x3 &MacierzA ,const Macierz3x3 &MacierzB);
 
 /*!
- * \brief Inicjalizuje Macierz3x3 obrotu w zaleznosci od osi i katu
- *
- * Funkcja Inicjalizuje Macierz3x3 ktora jest potrzebna do obracania obiektu trojwymiarowego
- * wzgledem osi x,y albo z oraz o kat podawany w stopniach
- * \param[in] axis os wedlug ktorej chcemy tworzyc macierz
- * \param[in] kat kat dzieki ktoremu chcemy stworzyc macierz
- * \return Macierz3x3 ktora jest wynikiem odpowiednich podstawien
+ *\brief Funkcja tworzy macierz obrotu przez os OX
+ *\param kat - kat o ktory ma byc obrocona bryla, podany w stopniach
+ *\return Funkcja zwraca macierz rotacji Macierz3x3
  */
-Macierz3x3 InicjalizujMacierz_obrotu(char axis,double kat);
-
-
-
-
-
-
-
-
-
-/*
- * \brief Inicjalizuje Macierz3x3 ktora ma byc jednostkowa
- *
- * Funkcja Inicjalizuje Macierz3x3 ktora jest do mnozenia
- * Korzystamy z faktu ze dowolna macierz przemnozona przez macierz jednostkowa 
- * nadal pozostaje ta sama Macierza
- * \return Macierz3x3 ktora jest macierza jednostkowa
+Macierz3x3 UtworzMacierzX(double kat);
+/*!
+ *\brief Funkcja tworzy macierz obrotu przez os OY
+ *\param kat - kat o ktory ma byc obrocona bryla, podany w stopniach
+ *\return Funkcja zwraca macierz rotacji Macierz3x3
  */
-//Macierz3x3 InicjalizujMacierz_jednostkowa();
-
+Macierz3x3 UtworzMacierzY(double kat);
+/*!
+ *\brief Funkcja tworzy macierz obrotu przez os OZ
+ *\param kat - kat o ktory ma byc obrocona bryla, podany w stopniach
+ *\return Funkcja zwraca macierz rotacji Macierz3x3
+ */
+Macierz3x3 UtworzMacierzZ(double kat);
 #endif

@@ -5,7 +5,7 @@
 #include <iostream>
 using namespace std;
 #include "Wektor3D.hh"
-#define PI 3.14//159265359
+#define PI 3.14159265
 
 /*!
  * \file  Macierz.hh
@@ -69,28 +69,6 @@ public:
 
 
 
-/*!
- * \brief Przeciazenie operatora << dla Macierzy
- * 
- * Funkcja przeciaza operator lewostronnego przesuniecia bitowego
- * ktory pozwala nam na wypisanie na Strumien wyjsciowy Macierzy obrotu
- * \param[in] Strm - Strumien wejsciowy
- * \param[in] Wek - Macierz ktora ma zostac wyswietlona
- * \return Zwraca strumien na ktorym zostala wypisana Macierz
- */
-template <int Wymiar>
-inline
-ostream& operator << (ostream &Strm, const Macierz<Wymiar> &Wek)
-{
-  int i;
-  for(i=0;i<Wymiar;i++)
-  {
-    Strm<<Wek[i];
-    if(i%1 == 0) cout<<endl;
-  }
-
-  return Strm;  
-}
 
 
 
