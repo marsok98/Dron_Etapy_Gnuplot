@@ -4,6 +4,7 @@
 #include <iostream>
 #include <iomanip>
 #include <Wektor3D.hh>
+#include <ObiektSceny.hh>
 using namespace std;
 
 /*!

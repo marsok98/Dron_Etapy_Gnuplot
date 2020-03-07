@@ -3,6 +3,7 @@
 #include <string>
 #include <list>
 #include <vector>
+#include<cstring>
 
 #ifdef __GNUG__
 #pragma interface
@@ -804,7 +805,7 @@ class LaczeDoGNUPlota {
     *         rysowania danych w podanym pliku.
     */
     InfoPlikuDoRysowania& DodajNazwePliku(
-                                 const char         *NazwaPliku,
+                                 std::string NazwaPliku,
                                  bool                SprawdzIstnienie = false,
                                  TypDostepuDoZasobu   Dostep = DZ_Lokalny
                                );

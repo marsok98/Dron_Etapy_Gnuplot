@@ -117,6 +117,11 @@ public:
      * \retval false w wypadku przeciwnym
      */
     bool ZapisFiguryDoPliku(string NazwaPliku);
+    /*!
+     * \brief Metoda umozliwia pobranie Wektora Przesuniecia  co jest jednoznaczne
+     * punktem srodka tej figury
+     */
+    Wektor3D PobierzWektorPrzesuniecia(){return WektorPrzesuniecia;}
 };
 
 

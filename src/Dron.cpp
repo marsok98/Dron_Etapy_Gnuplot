@@ -1,4 +1,22 @@
 #include "Dron.hh"
+bool Dron::CzyZaszlaKolizja(shared_ptr <Dron> Wsk)
+{
+    double OdlegloscXY;
+    double OdlegloscZ;
+    Wektor3D PolozenieArg = Wsk->PobierzWektorPrzesuniecia();
+    Wektor3D Polozenie = this->PobierzWektorPrzesuniecia();
+
+    OdlegloscXY = sqrt(pow((PolozenieArg[0] - Polozenie[0]),2)+ pow((PolozenieArg[1]-Polozenie[1]),2));
+    OdlegloscZ  = fabs(PolozenieArg[2]-Polozenie[2]);
+
+    if(OdlegloscXY <= RozstawDrona and OdlegloscZ <= GruboscDrona)
+    {
+        cout<<"Kolizja z innym dronem"<<endl;
+        cout<<"Ruch zostal przerwany"<<endl;
+        return true;
+    }
+    return false;
+}
 
 void Dron::WczytajSkaleDrona()
 {
@@ -10,9 +28,8 @@ void Dron::WczytajSkaleDrona()
 
 
 void Dron::Inicjalizuj()
-{
+{ 
     Korpus.Inicjalizuj(SkalaDrona * Wymiar_Korpusu);
-
     Rotor[0].Inicjalizuj(SkalaDrona * Wymiar_Wirnika, SkalaDrona * Grubosc_Wirnika);
     Rotor[1].Inicjalizuj(SkalaDrona * Wymiar_Wirnika, SkalaDrona * Grubosc_Wirnika);
     Rotor[2].Inicjalizuj(SkalaDrona * Wymiar_Wirnika, SkalaDrona * Grubosc_Wirnika);
@@ -27,16 +44,28 @@ void Dron::Inicjalizuj()
     Rotor[1].Ustaw_Offset_DodajDo_Offsetu_(Wek1);
     Rotor[2].Ustaw_Offset_DodajDo_Offsetu_(Wek2);
     Rotor[3].Ustaw_Offset_DodajDo_Offsetu_(Wek3);
+    
+    RozstawDrona = 2 * sqrt(2) * Wymiar_Korpusu + 2  * Wymiar_Wirnika;
+    GruboscDrona = 2 * Grubosc_Wirnika + Wymiar_Korpusu;
 
+}
+
+void Dron::DodajPlikiDronowi(PzG::LaczeDoGNUPlota &Lacze)
+{
+  Lacze.DodajNazwePliku("korpus_drona"+to_string(ID),PzG::SR_Ciagly);
+  Lacze.DodajNazwePliku("wirnik1_drona"+to_string(ID),PzG::SR_Ciagly);
+  Lacze.DodajNazwePliku("wirnik2_drona"+to_string(ID),PzG::SR_Ciagly);
+  Lacze.DodajNazwePliku("wirnik3_drona"+to_string(ID),PzG::SR_Ciagly);
+  Lacze.DodajNazwePliku("wirnik4_drona"+to_string(ID),PzG::SR_Ciagly);
 }
 
 void Dron::ZapiszDronaDoPlikow()
 {
-    Korpus.ZapisFiguryDoPliku(PLIK_KORPUS);
-    Rotor[0].ZapisFiguryDoPliku(PLIK_WIRNIK1);
-    Rotor[1].ZapisFiguryDoPliku(PLIK_WIRNIK2);
-    Rotor[2].ZapisFiguryDoPliku(PLIK_WIRNIK3);
-    Rotor[3].ZapisFiguryDoPliku(PLIK_WIRNIK4);
+    Korpus.ZapisFiguryDoPliku("korpus_drona"+to_string(ID));
+    Rotor[0].ZapisFiguryDoPliku("wirnik1_drona"+to_string(ID));
+    Rotor[1].ZapisFiguryDoPliku("wirnik2_drona"+to_string(ID));
+    Rotor[2].ZapisFiguryDoPliku("wirnik3_drona"+to_string(ID));
+    Rotor[3].ZapisFiguryDoPliku("wirnik4_drona"+to_string(ID));
 }
 
 void Dron::PrzesunDronaDodajDoWektoraPrzesuniecia(const Wektor3D &Wek)
@@ -49,37 +78,13 @@ void Dron::PrzesunDronaDodajDoWektoraPrzesuniecia(const Wektor3D &Wek)
     }
 }
 
-void Dron::AnimowanyRuchNaWprost(PzG::LaczeDoGNUPlota &Lacze)
+void Dron::AnimowanyRuchNaWprost(PzG::LaczeDoGNUPlota &Lacze,const Wektor3D &WektorCzastkowy)
 {
-  double droga;
-  double kat_wznoszenia;
-  cout<<"Podaj dlugosc drogi : ";
-  cin>>droga;
-  cout<<"\n Podaj kat_wznoszenia wznoszenia: ";
-  cin>>kat_wznoszenia;
-  while(kat_wznoszenia>=90 or kat_wznoszenia<=-90)
-  {
-      cout<<"Nieprawidlowy kat, kat musi zawierac w przedziale (-90,90)"<<endl<<endl;
-  }
-  double kat_wznoszenia_w_rad = M_PI/180.0 * kat_wznoszenia;
-  double kat_obrotu_z_klasy_w_rad = M_PI/180.0 *KatZ_stopnie ;
-  Wektor3D Wektor;
-
-  Wektor[0] = droga * cos(kat_obrotu_z_klasy_w_rad);
-  Wektor[1] = droga * sin(kat_obrotu_z_klasy_w_rad);
-  Wektor[2] = tan(kat_wznoszenia_w_rad) * abs(droga);
-
-  Wektor3D WektorCzastkowy = Wektor * (1.0/40.0);
-
-  int i;
-  for(i=0;i<40;i++)
-  {
     AnimowanyObrotSmigiel(Lacze);
     PrzesunDronaDodajDoWektoraPrzesuniecia(WektorCzastkowy);
     ZapiszDronaDoPlikow();
     usleep(5000);
     Lacze.Rysuj();
-  }
 }
 
 void Dron::PrzesunDronaNaSrodekUkladuWspolrzednych()

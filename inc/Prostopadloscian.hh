@@ -10,7 +10,6 @@
 
 /*!
  *\brief Klasa modeluje pojecie Prostopadloscianu, dziedziczaca z FiguryGeometryczny
- * ktora jest
  */
 class Prostopadloscian: public FiguraGeometryczna
 {

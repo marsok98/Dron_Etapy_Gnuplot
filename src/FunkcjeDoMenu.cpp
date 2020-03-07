@@ -12,6 +12,11 @@ void WyswietlMenu()
   cout << Wektor3D::ZwrocLacznaIloscWektorow()<<endl;
   cout << "Ilosc istniejacych obiektow klasy Wektor3D: ";
   cout << Wektor3D::ZwrocIloscWektorow()<<endl;
+  cout <<"\nInformacje o Obiektach Sceny\n";
+  cout << "Ilosc lacznie stworzonych obiektow klasy ObiektSceny: ";
+  cout << ObiektSceny::ZwrocLacznaIloscObiektowSceny()<<endl;
+  cout << "Ilosc istniejacych obiektow klasy ObiektSceny: ";
+  cout << ObiektSceny::ZwrocIloscObiektowSceny()<<endl;
 }
 
 

@@ -7,10 +7,12 @@ __start__: Dron
 	./Dron
 
 Dron: obj obj/main.o obj/FiguraGeometryczna.o obj/Macierz3x3.o obj/Wektor3D.o\
-           obj/lacze_do_gnuplota.o obj/Graniastoslup6.o obj/Prostopadloscian.o obj/Dron.o obj/FunkcjeDoMenu.o
+           obj/lacze_do_gnuplota.o obj/Graniastoslup6.o obj/Prostopadloscian.o obj/Dron.o obj/FunkcjeDoMenu.o\
+		   obj/PrzeszkodaPr.o obj/ObiektSceny.o obj/Scena.o
 	g++ -Wall -pedantic -std=c++0x -o Dron obj/main.o obj/Wektor3D.o\
                         obj/Macierz3x3.o obj/FiguraGeometryczna.o obj/lacze_do_gnuplota.o\
-                        obj/Graniastoslup6.o obj/Prostopadloscian.o obj/Dron.o obj/FunkcjeDoMenu.o
+                        obj/Graniastoslup6.o obj/Prostopadloscian.o obj/Dron.o obj/FunkcjeDoMenu.o\
+						obj/PrzeszkodaPr.o obj/ObiektSceny.o obj/Scena.o
 
 obj:
 	mkdir obj
@@ -38,11 +40,23 @@ obj/Graniastoslup6.o: src/Graniastoslup6.cpp inc/Graniastoslup6.hh inc/FiguraGeo
 obj/Prostopadloscian.o: src/Prostopadloscian.cpp inc/Prostopadloscian.hh inc/FiguraGeometryczna.hh
 	g++ -c ${CXXFLAGS} -o obj/Prostopadloscian.o src/Prostopadloscian.cpp
 
-obj/Dron.o: src/Dron.cpp inc/Dron.hh inc/FiguraGeometryczna.hh
+obj/Dron.o: src/Dron.cpp inc/Dron.hh inc/FiguraGeometryczna.hh inc/ObiektSceny.hh
 	g++ -c ${CXXFLAGS} -o obj/Dron.o src/Dron.cpp
 
 obj/FunkcjeDoMenu.o: src/FunkcjeDoMenu.cpp inc/FunkcjeDoMenu.hh
 	g++ -c ${CXXFLAGS} -o obj/FunkcjeDoMenu.o src/FunkcjeDoMenu.cpp
 
+obj/ObiektSceny.o: src/ObiektSceny.cpp inc/ObiektSceny.hh
+	g++ -c ${CXXFLAGS} -o obj/ObiektSceny.o src/ObiektSceny.cpp
+
+obj/PrzeszkodaPr.o: src/PrzeszkodaPr.cpp inc/PrzeszkodaPr.hh inc/ObiektSceny.hh inc/FiguraGeometryczna.hh
+	g++ -c ${CXXFLAGS} -o obj/PrzeszkodaPr.o src/PrzeszkodaPr.cpp
+
+obj/Scena.o: src/Scena.cpp inc/Scena.hh
+	g++ -c ${CXXFLAGS} -o obj/Scena.o src/Scena.cpp
+
+
 clean:
 	rm -f obj/*.o Dron
+	rm -f *drona*
+	rm -f Przeszkoda*

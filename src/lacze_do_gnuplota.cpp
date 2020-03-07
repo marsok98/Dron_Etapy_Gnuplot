@@ -164,16 +164,18 @@ namespace PzG {
 */
 
  InfoPlikuDoRysowania&  LaczeDoGNUPlota::DodajNazwePliku(
-                                    const char         *NazwaPliku,
+                                    std::string NazwaPliku,
                                     bool                SprawdzIstnienie,
                                     TypDostepuDoZasobu  Dostep
                                   )
+ 
  {
-  if (SprawdzIstnienie && !CzyJestPlik(NazwaPliku)) {
-    cerr << "!!! Ostrzezenie: Brak pliku " << NazwaPliku << endl;
+    const char *NazwaPliku1 = NazwaPliku.c_str();
+  if (SprawdzIstnienie && !CzyJestPlik(NazwaPliku1)) {
+    cerr << "!!! Ostrzezenie: Brak pliku " << NazwaPliku1 << endl;
   }
 
-  InfoPlikuDoRysowania Info(NazwaPliku,SR_Ciagly,DOMYSLNA_SZEROKOSC);
+  InfoPlikuDoRysowania Info(NazwaPliku1,SR_Ciagly,DOMYSLNA_SZEROKOSC);
 
   if (Dostep == DZ_Globalny) {  
     _InfoPlikow_Glb.push_back(Info);

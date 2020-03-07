@@ -8,14 +8,14 @@
  */
 
 /*!
- *\brief Klasa modeluje pojecie Graniastoslupa szesciokatnego foremnego,
+ * \brief Klasa modeluje pojecie Graniastoslupa szesciokatnego foremnego,
  * dziedziczaca z FiguryGeometrycznej ktora jest
  */
 class Graniastoslup6: public FiguraGeometryczna
 {
     public:
   /*!
-   *\brief Metoda inicjalizuje wierzcholki Graniastoslupa szesciokatnego foremnego
+   * \brief Metoda inicjalizuje wierzcholki Graniastoslupa szesciokatnego foremnego
    * 
    * Inicjalizuje Graniastoslup szesciokatny foremny
    * Ustawia Poczatkowy_Wierzcholek oraz synchronizuje z Aktualnym Wierzcholkiem
